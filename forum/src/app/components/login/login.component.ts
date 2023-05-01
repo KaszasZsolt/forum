@@ -21,6 +21,15 @@ export class LoginComponent implements OnInit{
   onSubmit() {
     console.log(this.loginForm.value)
     if(this.loginForm.valid){
+      this.auth.login(this.loginForm.value).then(cred=>{
+        this.auth.setToken('egaselorecsakoken')
+        this.router.navigate(['admin'])
+        console.log(cred)
+      }).catch(error=>{
+        console.log(error)
+      })
+    } 
+   /* if(this.loginForm.valid){
       this.auth.login(this.loginForm.value).subscribe(
         (result)=>{
           this.router.navigate(['admin'])
@@ -29,7 +38,7 @@ export class LoginComponent implements OnInit{
           alert(err.message);
         }
       )
-    }
+    }*/
 
   }
 

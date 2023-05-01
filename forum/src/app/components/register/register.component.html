@@ -2,15 +2,14 @@
     <div class="row justify-content-center h-100">
         <div class="card my-auto shadow">
             <div class="card-body px-5">
+            
                 <div class="text-center">
-                    <fa-icon [icon]="faLock" class="fa-3x"></fa-icon>
-                </div>
-                <div class="text-center">
-                    <h1>Bejelentkezés</h1>
+                    <h1>Regisztráció</h1>
                 </div>
                 <p style="color: lightslategray; text-align: center;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Írd be a belépési adatokat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Írd be regisztrációs adatokat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    
                     <div class="form-group">
                         <input type="email" id="email" placeholder="Email" class="form-control m-2" formControlName="email"
                             name="email" />
@@ -19,12 +18,18 @@
                         <input type="password" id="password" placeholder="Jelszó" class="form-control m-2"
                             formControlName="password" name="password" />
                     </div>
-                    <input type="submit" class="btn btn-primary w-100 m-2" value="Bejelentkezés" name="">
+                    <div class="form-group">
+                        <input type="password" id="confirmpassword" placeholder="Jelszó megerősítés" class="form-control m-2"
+                            formControlName="confirmpassword" name="confirmpassword" />
+                    </div>
+
+                    <input type="submit" class="btn btn-primary w-100 m-2" value="Regisztráció" name="">
                    
                 </form>
                 <div class="mx-auto">
-                    <small><a routerLink="../forgot-password" class="m-2  btn btn-primary btn-sm">Elfelejtettem a jelszavam</a></small>
-                    <small><a routerLink="../register" class="m-2 btn btn-primary btn-sm">Regisztráció</a></small>
+                    <div class="card-footer text-right">
+                        <small>Már van fiókom <a routerLink="../login">Vissza a bejeletkezéshez</a></small>
+                    </div>
                 </div>
             </div>
            

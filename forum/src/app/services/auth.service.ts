@@ -1,12 +1,13 @@
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private router: Router) {}
+  constructor(private router: Router,private auth: AngularFireAuth) {}
 
   setToken(token: string): void {
     localStorage.setItem('token', token);
@@ -25,12 +26,15 @@ export class AuthService {
     this.router.navigate(['login']);
   }
 
-  login({ email, password }: any): Observable<any> {
 
-    if (email === 'admin@gmail.com' && password === 'admin123') {
+  login({ email, password }: any){
+    return this.auth.signInWithEmailAndPassword(email,password)
+  }
+   /* if ( {
       this.setToken('abcdefghijklmnopqrstuvwxyz');
       return of({ name: 'Tarique Akhtar', email: 'admin@gmail.com' });
     }
     return throwError(new Error('Failed to login'));
-  }
+  }*/
+
 }
