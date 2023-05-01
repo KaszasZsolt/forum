@@ -14,15 +14,12 @@ export class LoginComponent implements OnInit{
   constructor(private auth:AuthService, private router:Router){}
 
   ngOnInit(): void {
-    if(this.auth.isLoggedIn()){
-      this.router.navigate(['admin']);
-    }
+    
   }
   onSubmit() {
     console.log(this.loginForm.value)
     if(this.loginForm.valid){
       this.auth.login(this.loginForm.value).then(cred=>{
-        this.auth.setToken('egaselorecsakoken')
         this.router.navigate(['admin'])
         console.log(cred)
       }).catch(error=>{

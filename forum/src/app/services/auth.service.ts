@@ -9,21 +9,14 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class AuthService {
   constructor(private router: Router,private auth: AngularFireAuth) {}
 
-  setToken(token: string): void {
-    localStorage.setItem('token', token);
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
+ 
 
   isLoggedIn() {
-    return this.getToken() !== null;
+      return  this.auth.user;
   }
 
   logout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['login']);
+    return this.auth.signOut();
   }
 
 
@@ -36,5 +29,8 @@ export class AuthService {
     }
     return throwError(new Error('Failed to login'));
   }*/
+  signup(email:string, password:string){
+    return this.auth.createUserWithEmailAndPassword(email,password)
+  }
 
 }
