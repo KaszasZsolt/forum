@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "forum-91f0d": {
+      "hosting": {
+        "forum": [
+          "forum-91f0d"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "forum-91f0d"
+  }
+}
