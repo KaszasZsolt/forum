@@ -8,6 +8,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { SearchComponent } from './components/search/search.component';
 
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { SearchComponent } from './components/search/search.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
   ]
 })
 export class AdminModule { }

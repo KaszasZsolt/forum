@@ -1,8 +1,8 @@
 
 export interface Message{
     id:string;
-    topicId:string;
-    userId:string;
-    createDate:string;
+    topicId:string|undefined;
+    userId:string |undefined;
+    createDate:Date;
     content:string;
 }

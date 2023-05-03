@@ -1,48 +1,50 @@
+<div class="container pt-3 pb-0"  mat-button color="accent" *ngIf="topicId"><button (click)="visszatopic()">Vissza</button></div>
+
 <div class="container pt-5 pb-5">
-    <div class="col-12">
-        <div class="d-flex flex-column justify-content-between">
+    <div class="col-12" *ngFor="let topic of topicObject" (click)="onSelect(topic)" >
+        <div class="d-flex flex-column justify-content-between" *ngIf="topic?.id===topicId || !topicId">
             <div class="card shadow mt-2">
                 <div class="card-body">
-                    <h5 class="card-title">Admin Component</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a class="btn btn-primary">Go somewhere</a>
+                    <h2 class="card-title">{{topic.topicName}}</h2>
+                    <p class="card-text">{{topic.content}}</p>
                 </div>
             </div>
-            <div class="card shadow mt-2">
-                <div class="card-body">
-                    <h5 class="card-title">Admin Component</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card shadow mt-2">
-                <div class="card-body">
-                    <h5 class="card-title">Admin Component</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card shadow mt-2">
-                <div class="card-body">
-                    <h5 class="card-title">Admin Component</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card shadow mt-2">
-                <div class="card-body">
-                    <h5 class="card-title">Admin Component</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card shadow mt-2">
-                <div class="card-body">
-                    <h5 class="card-title">Admin Component</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
+        </div> 
     </div>
+</div>
+<div class="container pt-5 pb-5">
+    <div class="col-12" *ngFor="let message of messageObject" >
+        <div class="d-flex flex-column justify-content-between" >
+            <div class="card shadow mt-2">
+                <div class="card-body">
+                    <h2 class="card-title">{{message.id}}</h2>
+                    <p class="card-text">{{message.content}}</p>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+
+<div class="d-flex flex-column p-2 justify-content-center align-items-center" *ngIf="topicId">
+    <mat-form-field appearance="fill" style="width: 50%;">
+    <mat-label>Hozzászólás</mat-label>
+    <textarea matInput placeholder="hozzászólás" cols="30" rows="4" maxlength="3000" #commentarea ></textarea>
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <button (click)="sendmessage(commentarea.value)">Küldés</button>
+</mat-form-field>
+</div>
+
+<div class="d-flex flex-column p-2 justify-content-center align-items-center" *ngIf="!topicId">
+   
+        <mat-form-field appearance="fill" style="width: 50%;">
+            <mat-label>Topic név</mat-label>
+            <input matInput #topicname>
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="width: 50%;">
+            <mat-label>Topic tartalom</mat-label> 
+            <textarea matInput placeholder="topic" cols="30" rows="4" maxlength="3000" #topicarea ></textarea>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <button mat-stroked-button color="accent"  (click)="sendtopic(topicarea.value,topicname.value)">Küldés</button>
+        </mat-form-field>
+
 </div>
