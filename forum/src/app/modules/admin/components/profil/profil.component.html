@@ -1,1 +1,70 @@
-<p>profil works!</p>
+<div class="container pt-5 pb-2">
+    <div class="col-12" *ngFor="let user of usersObject" >
+            <div class="d-flex flex-column justify-content-between" *ngIf="(user?.id== loggedInUser?.uid )|| (loggedInUser ? isAdminUser(loggedInUser?.uid) :false)">
+                <div class="card shadow mt-2">
+                    <div class="card-body">
+                        <h2 class="card-title">{{user.email}}</h2>
+                        <p class="card-text">{{user.username}}</p>
+                        <p class="card-text">{{user.createDate? convertToDate(user.createDate) : '' }}</p>
+                        <button  mat-stroked-button (click)="deleteUser(user.id)">Törlés</button>
+                    <button mat-stroked-button (click)="isEditMode=!isEditMode; isEditUserId=user.id" *ngIf="user.id==loggedInUser?.uid || (loggedInUser ? isAdminUser(loggedInUser?.uid) :false) ">Szerkesztés</button>
+                    <div *ngIf="isEditMode==true && user.id==isEditUserId" class="d-flex flex-column p-2 justify-content-center align-items-center">
+                        
+                        
+                       
+                           
+                            <mat-form-field>
+                            <input matInput placeholder="Új email cím" cols="30" rows="1" maxlength="100" #email >
+                            </mat-form-field>
+                            <mat-form-field>
+                            <input matInput placeholder="Új név" cols="30" rows="1" maxlength="100" #nev >
+                            </mat-form-field>
+                           
+                            <button mat-stroked-button  (click)="udpateUser(user,email.value,nev.value)">Küldés</button>
+                       
+                    </div>
+
+
+                    </div>
+                </div>
+            </div> 
+        </div>
+</div>
+<div *ngIf="(loggedInUser ? isAdminUser(loggedInUser?.uid) :false)" class="center">
+    
+    <mat-list role="list" *ngFor="let user of usersObject">
+        
+      <mat-list-item style="width: auto; height: auto ;" >
+        <mat-card>
+            <mat-card-content class="d-flex flex-wrap  justify-content-around">
+                <div>{{user.username}}</div>
+                <div>{{user.email}}</div>
+                <div>{{user.id}}</div>
+                <div>{{user.createDate ? convertToDate(user.createDate) : ''}}   </div>           
+                <div>{{user.accountType}}
+                <mat-slide-toggle [checked]="user.accountType=='admin' ? true : false" (change)="toggle(user)"></mat-slide-toggle>
+                <button  mat-stroked-button (click)="deleteUser(user.id)">Törlés</button>
+                    <button mat-stroked-button (click)="isEditMode=!isEditMode; isEditUserId=user.id" *ngIf="user.id==loggedInUser?.uid || (loggedInUser ? isAdminUser(loggedInUser?.uid) :false) ">Szerkesztés</button>
+                    <div *ngIf="isEditMode==true && user.id==isEditUserId" class="d-flex flex-column p-2 justify-content-center align-items-center">
+                        
+                        
+                       
+                           
+                            <mat-form-field>
+                            <input matInput placeholder="Új email cím" cols="30" rows="1" maxlength="100" #email >
+                            </mat-form-field>
+                            <mat-form-field>
+                            <input matInput placeholder="Új név" cols="30" rows="1" maxlength="100" #nev >
+                            </mat-form-field>
+                           
+                            <button mat-stroked-button  (click)="udpateUser(user,email.value,nev.value)">Küldés</button>
+                       
+                    </div>
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+      </mat-list-item>  
+      <mat-divider></mat-divider>
+    </mat-list>
+  </div>

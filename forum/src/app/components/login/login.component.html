@@ -13,11 +13,11 @@
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <input type="email" id="email" placeholder="Email" class="form-control m-2" formControlName="email"
-                            name="email" />
+                            name="email" autocomplete="username"/>
                     </div>
                     <div class="form-group">
                         <input type="password" id="password" placeholder="Jelszó" class="form-control m-2"
-                            formControlName="password" name="password" />
+                            formControlName="password" name="password" autocomplete="current-password"/>
                     </div>
                     <input type="submit" class="btn btn-primary w-100 m-2" value="Bejelentkezés" name="">
                    
@@ -25,6 +25,9 @@
                 <div class="mx-auto">
                     <small><a routerLink="../forgot-password" class="m-2  btn btn-primary btn-sm">Elfelejtettem a jelszavam</a></small>
                     <small><a routerLink="../register" class="m-2 btn btn-primary btn-sm">Regisztráció</a></small>
+                </div>
+                <div class="mx-auto center" *ngIf="IsThereError">
+                    <mat-error >Hibás Regisztráció, probáld újra. Jelszó, legalább 6 karakter kell hogy legyen. Esetleg már regisztráltál ezzel az emailcímmel.</mat-error>
                 </div>
             </div>
            

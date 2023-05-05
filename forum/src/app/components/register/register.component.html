@@ -31,6 +31,9 @@
                         <small>Már van fiókom <a routerLink="../login">Vissza a bejeletkezéshez</a></small>
                     </div>
                 </div>
+                <div class="mx-auto center" *ngIf="IsThereError">
+                        <mat-error >Hibás Regisztráció, probáld újra. Jelszó, legalább 6 karakter kell hogy legyen. Esetleg már regisztráltál ezzel az emailcímmel.</mat-error>
+                </div>
             </div>
            
         </div>

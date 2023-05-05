@@ -21,7 +21,10 @@ export class TopicService {
   getAll(){
     return this.afs.collection<Topic>(this.collectionName).valueChanges();
   }
-  update(){
-    
+  update(topic:Topic){
+    return this.afs.collection<Topic>(this.collectionName).doc(topic.id).set(topic);
+  }
+  delete(id:string){
+    return this.afs.collection<Topic>(this.collectionName).doc(id).delete();
   }
 }

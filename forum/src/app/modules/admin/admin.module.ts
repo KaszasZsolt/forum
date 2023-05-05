@@ -6,11 +6,17 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ProfilComponent } from './components/profil/profil.component';
-import { SearchComponent } from './components/search/search.component';
+import { FormsModule } from '@angular/forms';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -18,7 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
     HomeComponent,
     HeaderComponent,
     ProfilComponent,
-    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +31,13 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    FormsModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatListModule,
+    MatCardModule,
+    MatGridListModule,
+    MatSlideToggleModule
   ]
 })
 export class AdminModule { }

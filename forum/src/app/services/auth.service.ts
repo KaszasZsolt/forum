@@ -23,12 +23,7 @@ export class AuthService {
   login({ email, password }: any){
     return this.auth.signInWithEmailAndPassword(email,password)
   }
-   /* if ( {
-      this.setToken('abcdefghijklmnopqrstuvwxyz');
-      return of({ name: 'Tarique Akhtar', email: 'admin@gmail.com' });
-    }
-    return throwError(new Error('Failed to login'));
-  }*/
+
   signup(email:string, password:string){
     return this.auth.createUserWithEmailAndPassword(email,password)
   }

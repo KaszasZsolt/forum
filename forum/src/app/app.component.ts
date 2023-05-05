@@ -17,9 +17,7 @@ export class AppComponent implements OnInit{
       
       this.loggedInUser=user;
       localStorage.setItem('user',JSON.stringify(this.loggedInUser));
-      console.log(user)
     },error =>{
-      console.log(error)
       localStorage.setItem('user',JSON.stringify('null'));
     })
   }

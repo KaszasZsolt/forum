@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit{
   ngOnInit(): void {
     
   }
+  IsThereError=false;
   onSubmit() {
     
     const email = this.registerForm.get('email')?.value ;
@@ -28,19 +29,21 @@ export class RegisterComponent implements OnInit{
       this.auth.signup(email, password).then(cred=>
         {
           this.router.navigate(['admin'])
+          const time=new Date()
           const user: User={
             id: cred.user?.uid as string,
             email:this.registerForm.get('email')?.value as string ,
-            username:this.registerForm.get('email')?.value?.split('@')[0] as string
+            username:this.registerForm.get('email')?.value?.split('@')[0] as string,
+            createDate:time.getTime(),
+            accountType:'User'
           };
           this.userService.create(user).then(_ =>{
-            console.log('user added succes')
           }).catch(error=>{
-            console.log(error)
+            this.IsThereError=true
           })
           
         }).catch(error=>{
-          console.error(error)
+          this.IsThereError=true
         });
     }
     

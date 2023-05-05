@@ -1,42 +1,26 @@
-<div class="container pt-3 pb-0"  mat-button color="accent" *ngIf="topicId"><button (click)="visszatopic()">Vissza</button></div>
-
-<div class="container pt-5 pb-5">
-    <div class="col-12" *ngFor="let topic of topicObject" (click)="onSelect(topic)" >
-        <div class="d-flex flex-column justify-content-between" *ngIf="topic?.id===topicId || !topicId">
-            <div class="card shadow mt-2">
-                <div class="card-body">
-                    <h2 class="card-title">{{topic.topicName}}</h2>
-                    <p class="card-text">{{topic.content}}</p>
-                </div>
-            </div>
-        </div> 
-    </div>
+<div class="container pt-3 pb-0"  mat-button color="accent" *ngIf="topicId">
+    <button  mat-stroked-button (click)="visszatopic()">Vissza</button>
 </div>
-<div class="container pt-5 pb-5">
-    <div class="col-12" *ngFor="let message of messageObject" >
-        <div class="d-flex flex-column justify-content-between" >
-            <div class="card shadow mt-2">
-                <div class="card-body">
-                    <h2 class="card-title">{{message.id}}</h2>
-                    <p class="card-text">{{message.content}}</p>
-                </div>
-            </div>
-        </div> 
-    </div>
+<div class="center">
+    <mat-form-field>
+        <input type="text" matInput placeholder="Search" [(ngModel)]="searchTerm">
+    </mat-form-field>
+   
 </div>
 
-<div class="d-flex flex-column p-2 justify-content-center align-items-center" *ngIf="topicId">
+<div class="d-flex flex-column p-2 justify-content-center align-items-center center" *ngIf="topicId" >
     <mat-form-field appearance="fill" style="width: 50%;">
     <mat-label>Hozzászólás</mat-label>
     <textarea matInput placeholder="hozzászólás" cols="30" rows="4" maxlength="3000" #commentarea ></textarea>
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-    <button (click)="sendmessage(commentarea.value)">Küldés</button>
-</mat-form-field>
+    <button mat-stroked-button  (click)="sendmessage(commentarea.value)">Küldés</button>
+    </mat-form-field>
 </div>
-
-<div class="d-flex flex-column p-2 justify-content-center align-items-center" *ngIf="!topicId">
-   
-        <mat-form-field appearance="fill" style="width: 50%;">
+<div class="center">
+    <button  mat-stroked-button *ngIf="!topicId" (click)=" isEditMode=!isEditMode; isEditMessageId='topicletrehoz'">Topic létrehozás</button> 
+</div>
+<div class="d-flex flex-column p-2 justify-content-center align-items-center" *ngIf="!topicId && isEditMode && isEditMessageId=='topicletrehoz'"  >
+        <mat-form-field appearance="fill" style="width: 50%;" >
             <mat-label>Topic név</mat-label>
             <input matInput #topicname>
         </mat-form-field>
@@ -44,7 +28,84 @@
             <mat-label>Topic tartalom</mat-label> 
             <textarea matInput placeholder="topic" cols="30" rows="4" maxlength="3000" #topicarea ></textarea>
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            <button mat-stroked-button color="accent"  (click)="sendtopic(topicarea.value,topicname.value)">Küldés</button>
+            <button mat-stroked-button  (click)="sendtopic(topicarea.value,topicname.value)">Küldés</button>
         </mat-form-field>
-
+        
 </div>
+
+<div class="container pt-1 pb-1">
+    <div class="col-12" *ngFor="let message of messageObject" >
+        <div class="d-flex flex-column justify-content-between" *ngIf=" searchTerm.length>0 && message.id.toLowerCase().includes(searchTerm.toLowerCase()) || message.content.toLowerCase().includes(searchTerm.toLowerCase())">
+            <div class="card shadow mt-2">
+                <div class="card-body">
+                    <mat-grid-list cols="5" rowHeight="40px">
+                        <mat-grid-tile>
+                            <h2 class="card-title" >{{ message.userId ? getUserById(message.userId) : '' }}</h2>
+                        </mat-grid-tile>
+                      
+                    </mat-grid-list>
+                    
+                    <mat-divider></mat-divider>
+                    <div class="card-text center" >{{message.content}}</div>
+                    <mat-divider></mat-divider>
+
+                    <div class="card-text pb-1 pt-1" >{{message.createDate? convertToDate(message.createDate) : '' }}</div>
+                    <button  mat-stroked-button (click)="deleteMessage(message.id)" *ngIf="(message?.userId== loggedInUser?.uid )|| (loggedInUser ? isAdminUser(loggedInUser?.uid) :false)">Törlés</button>
+
+
+                    <button mat-stroked-button (click)="isEditMode=!isEditMode; isEditMessageId=message.id" *ngIf="message.userId==loggedInUser?.uid">Szerkesztés</button>
+                    <div *ngIf="isEditMode==true && message.id==isEditMessageId" class="d-flex flex-column p-2 justify-content-center align-items-center">
+                        <mat-form-field appearance="fill" style="width: 50%;">
+                            <mat-label>Hozzászólás</mat-label>
+                            <textarea matInput placeholder="hozzászólás" cols="30" rows="4" maxlength="3000" #commentarea ></textarea>
+                            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                            <button mat-stroked-button  (click)="udpateMessage(message,commentarea.value)">Küldés</button>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<div class="container pt-5 pb-2">
+    <div class="col-12" *ngFor="let topic of topicObject" >
+        <div *ngIf="searchTerm.length>0 && topic.topicName.toLowerCase().includes(searchTerm.toLowerCase()) || topic.content.toLowerCase().includes(searchTerm.toLowerCase())">
+            <div class="d-flex flex-column justify-content-between" *ngIf="!topicId || topic?.id===topicId ">
+                <div class="card shadow mt-2">
+                    <div class="card-body">
+                        <mat-grid-list cols="5" rowHeight="40px">
+                            <mat-grid-tile>
+                                <h2 class="card-title" >{{ topic.userId ? getUserById(topic.userId) : '' }}</h2>
+                            </mat-grid-tile>
+                         
+                        </mat-grid-list>
+                     
+                        <h2 class="card-title center">{{topic.topicName}}</h2>
+                      
+                        <mat-divider></mat-divider>
+                        <p class="card-text">{{topic.content}}</p>
+                        <mat-divider></mat-divider>
+                        <p class="card-text">{{topic.createDate? convertToDate(topic.createDate) : '' }}</p>
+                        <button  mat-stroked-button (click)="deleteTopic()"  *ngIf="(topic?.userId== loggedInUser?.uid )|| (loggedInUser ? isAdminUser(loggedInUser?.uid) :false)">Törlés</button>
+                        <button  mat-stroked-button (click)="onSelect(topic)" *ngIf="!topicId">Megnyit</button>
+                        <button mat-stroked-button (click)="isEditMode=!isEditMode; isEditMessageId=topic.id" *ngIf="topic.userId==loggedInUser?.uid ">Szerkesztés</button>
+                        <div *ngIf="isEditMode==true && topic.id==isEditMessageId" class="d-flex flex-column p-2 justify-content-center align-items-center">
+                            <mat-form-field appearance="fill" style="width: 50%;" >
+                                <mat-label>Topic név</mat-label>
+                                <input matInput #topicname>
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" style="width: 50%;">
+                                <mat-label>Topic tartalom</mat-label> 
+                                <textarea matInput placeholder="topic" cols="30" rows="4" maxlength="3000" #topicarea ></textarea>
+                                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                                <button mat-stroked-button   (click)="udpateTopic(topic,topicname.value,topicarea.value)">Küldés</button>
+                            </mat-form-field>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+

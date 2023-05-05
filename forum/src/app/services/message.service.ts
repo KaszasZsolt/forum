@@ -24,10 +24,10 @@ export class MessageService {
     return this.afs.collection<Message>(this.collectionName, ref => ref.where('topicId', '==',topic.id)).valueChanges();
   }
 
-  update(){
-
+  update(message:Message){
+    return this.afs.collection<Message>(this.collectionName).doc(message.id).set(message);
   }
-  delete(){
-
+  delete(id:string){
+    return this.afs.collection<Message>(this.collectionName).doc(id).delete();
   }
 }
