@@ -1,5 +1,15 @@
 {
+  "projects": {
+    "default": "forum-91f0d"
+  },
   "targets": {
+    "firebase": {
+      "hosting": {
+        "forum": [
+          "forum-91f0d"
+        ]
+      }
+    },
     "forum-91f0d": {
       "hosting": {
         "forum": [
@@ -8,7 +18,5 @@
       }
     }
   },
-  "projects": {
-    "default": "forum-91f0d"
-  }
+  "etags": {}
 }
